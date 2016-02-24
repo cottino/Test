@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -36,7 +37,8 @@ public class Solver {
 		// int[] ar2 = {1,3,4};
 		// int y = b.findMissingXOR(ar1,ar2);
 		// System.out.println(y);
-		b.permutation("LES");
+		String s = "my name is chrisyn"; 
+		b.findUnique(s);
 	}
 
 	// Reverse the words in a string (could place words on stack then pop off to
@@ -158,14 +160,14 @@ public class Solver {
 	// missing return the missing number.
 	// I think that this could be problematic if the arrays are too large or
 	// number surpasses MAX_INT
-	private int findMissing(int[] ar1, int[] ar2) {
+	public int findMissing(int[] ar1, int[] ar2) {
 		int sum1 = IntStream.of(ar1).sum();
 		int sum2 = IntStream.of(ar2).sum();
 		return (sum1 == sum2 && ar1.length > ar2.length) ? 0 : sum1 - sum2;
 	}
 
 	// XORing two numbers together will result in zero.
-	private int findMissingXOR(int[] ar1, int[] ar2) {
+	public int findMissingXOR(int[] ar1, int[] ar2) {
 		int result = 0;
 		int[] both = (int[]) ArrayUtils.addAll(ar1, ar2);
 		for (int n : both) {
@@ -222,4 +224,74 @@ public class Solver {
 		}
 		return true; 
 	}
+	
+	/*
+	 * Finding the median in a variatic stream of numbers. 
+	 * 1. We will use min_heap and max_heap for optimal efficiency. Binary Searching
+	 * is possible but will take a long time. 
+	 * Rules: 
+	 * 1. Max heap will contain smallest half and min heap largest half. 
+	 * 2. The number of elements in max-heap is either equal to or 1 more then the #
+	 * in min-heap. 
+	 * 3.If # is odd median is root of max heap, if even then the average of both roots. 
+	 * I am not sure if java has heaps built in so maybe take time and implement this. 
+	 */
+	
+	/*
+	 * Find the first non repeated character in the string. 
+	 */
+	public void findUnique(String s){
+		HashMap<Character, Integer> counts = new HashMap<Character, Integer>();
+		//Get all the letters mapped to a count. 
+		for(int i=0; i<s.length(); i++){
+			if(counts.containsKey(s.charAt(i)) ){
+				char c = s.charAt(i);
+				int n = counts.get(s.charAt(i)) + 1; 
+				counts.put(c, n);  
+			}else{
+				counts.put(s.charAt(i), 1); 
+			}
+		}
+		
+		for(Map.Entry<Character, Integer> entry : counts.entrySet()){
+			if(entry.getValue() == 1){
+				System.out.println( entry.getKey()); 
+				return; 
+			}
+		}
+		
+	}
+	
+	/*
+	 * For anagrams just count all letters in first string then go through second and decrement. 
+	 * if a letter reaches negative or the letter doesn't exist they are not anagrams. 
+	 */
+	
+	
+	/*
+	 * Return index (if exists) in an array of unknown length. 
+	 */
+	public int findIndexUnknownLength(int[] ar, int findMe){
+		boolean notFound = true; 
+		int i = 0; 
+		while(notFound){
+			try{
+				int cur = ar[i];
+				if(cur == findMe ){
+					return i; 
+				}
+				i++; 
+			}catch(NullPointerException e){
+				return -1; 
+			}
+		}
+		
+		return 0; 
+	}
+	
+	
+	
+	
+	
+	
 }

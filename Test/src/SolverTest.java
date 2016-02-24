@@ -48,6 +48,17 @@ public class SolverTest {
 		test = s.stringCombine(str1,str2,str3);
 		assertEquals(true,test);
 	}
+	
+	@Test 
+	public void findMissingTest(){
+		int[] ar1 = {1,2,3,4,7}; 
+		int[] ar2 = {2,3,4,7}; 
+		int missing = s.findMissingXOR(ar1,ar2);
+		assertEquals(1, missing);
+		missing = s.findMissing(ar1, ar2);
+		assertEquals(1, missing); //bad test since missing was one before.
+			
+	}
 
 	
 }
